@@ -24,6 +24,7 @@
 ## Требования
 
 - **Python 3.10+** (с галочкой `Add python.exe to PATH` при установке)
+  скачать Python можно по ссылке https://www.python.org/downloads/windows/ 
 - ОС: Windows (батники), Linux/macOS (запуск через `python`)
 - Подключение к интернету (первая установка скачивает зависимости)
 
