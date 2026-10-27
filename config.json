@@ -1,0 +1,60 @@
+{
+  "background_threshold": 235,
+  "rules": [
+    {
+      "image": "signature_1.png",
+      "width": 30,
+      "x": 1264.5,
+      "y": 1073.0,
+      "anchor_text": "Лапина",
+      "anchor_occurrence": 0,
+      "offset_x": 62.1,
+      "offset_y": -22.83,
+      "page": 0
+    },
+    {
+      "image": "signature_2.png",
+      "width": 30,
+      "x": 1273.0,
+      "y": 1098.0,
+      "anchor_text": "Потапов",
+      "anchor_occurrence": 0,
+      "offset_x": 69.4,
+      "offset_y": -11.51,
+      "page": 0
+    },
+    {
+      "image": "seal_1.png",
+      "width": 100,
+      "x": 1136.5,
+      "y": 938.5,
+      "anchor_text": "Изм.",
+      "anchor_occurrence": 0,
+      "offset_x": -12.26,
+      "offset_y": -141.97,
+      "page": 0
+    },
+    {
+      "image": "seal_2.png",
+      "width": 100,
+      "x": 1246.5,
+      "y": 945.0,
+      "anchor_text": "№док.",
+      "anchor_occurrence": 0,
+      "offset_x": 13.14,
+      "offset_y": -135.47,
+      "page": 0
+    },
+    {
+      "image": "seal_3.png",
+      "width": 188,
+      "x": 1399.0,
+      "y": 940.5,
+      "anchor_text": "Строительство,",
+      "anchor_occurrence": 0,
+      "offset_x": 19.6,
+      "offset_y": -117.17,
+      "page": 0
+    }
+  ]
+}
