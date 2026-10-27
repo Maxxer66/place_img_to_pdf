@@ -1,5 +1,5 @@
 @echo off
-chcp 65001 >nul
+chcp 1251 >nul
 cd /d "%~dp0"
 
 set PY=
@@ -8,15 +8,15 @@ if not defined PY (
     where py >nul 2>nul && set PY=py -3
 )
 if not defined PY (
-    echo Python РЅРµ РЅР°Р№РґРµРЅ. РЈСЃС‚Р°РЅРѕРІРёС‚Рµ СЃ https://www.python.org/downloads/
-    echo Рё РѕС‚РјРµС‚СЊС‚Рµ РіР°Р»РѕС‡РєСѓ "Add python.exe to PATH".
+    echo Python не найден. Установите с https://www.python.org/downloads/
+    echo и отметьте галочку "Add python.exe to PATH".
     pause
     exit /b 1
 )
 
 %PY% -m pip install --quiet --upgrade pdf-sign-kit
 if errorlevel 1 (
-    echo РќРµ СѓРґР°Р»РѕСЃСЊ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ pdf-sign-kit. РџСЂРѕРІРµСЂСЊС‚Рµ РёРЅС‚РµСЂРЅРµС‚.
+    echo Не удалось установить pdf-sign-kit. Проверьте интернет.
     pause
     exit /b 1
 )

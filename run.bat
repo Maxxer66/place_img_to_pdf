@@ -1,27 +1,27 @@
 @echo off
 setlocal enableextensions
 
-rem РџРµСЂРµРєР»СЋС‡Р°РµРј РєРѕРґРѕРІСѓСЋ СЃС‚СЂР°РЅРёС†Сѓ РЅР° UTF-8 (С‚РѕР»СЊРєРѕ РґР»СЏ РІС‹РІРѕРґР° СЃРѕРѕР±С‰РµРЅРёР№)
-chcp 65001 >nul
+rem Переключаем кодовую страницу на Windows-1251 (для ANSI)
+chcp 1251 >nul
 
-rem РџРµСЂРµС…РѕРґРёРј РІ РїР°РїРєСѓ СЃРєСЂРёРїС‚Р° (СЂР°Р±РѕС‚Р°РµС‚ Рё СЃ UNC-РїСѓС‚СЏРјРё)
+rem Переходим в папку скрипта (работает и с UNC-путями)
 pushd "%~dp0" >nul 2>nul
 if errorlevel 1 (
-    echo РќРµ СѓРґР°Р»РѕСЃСЊ РїРµСЂРµР№С‚Рё РІ РїР°РїРєСѓ СЃРєСЂРёРїС‚Р°: %~dp0
+    echo Не удалось перейти в папку скрипта: %~dp0
     pause
     exit /b 1
 )
 
-rem --- РџСЂРѕРІРµСЂРєР° СЃС‚СЂСѓРєС‚СѓСЂС‹ РїСЂРѕРµРєС‚Р° ---
+rem --- Проверка структуры проекта ---
 if not exist "source\" (
     mkdir "source" >nul 2>nul
     if errorlevel 1 (
-        echo РќРµ СѓРґР°Р»РѕСЃСЊ СЃРѕР·РґР°С‚СЊ РїР°РїРєСѓ source.
+        echo Не удалось создать папку source.
         popd
         pause
         exit /b 1
     )
-    echo РџР°РїРєР° source СЃРѕР·РґР°РЅР°. РџРѕР»РѕР¶РёС‚Рµ РІ РЅРµС‘ PDF Рё Р·Р°РїСѓСЃС‚РёС‚Рµ СЃРЅРѕРІР°.
+    echo Папка source создана. Положите в неё PDF и запустите снова.
     popd
     pause
     exit /b 1
@@ -30,27 +30,27 @@ if not exist "source\" (
 set "HAS_PDF="
 for %%F in ("source\*.pdf") do set "HAS_PDF=1"
 if not defined HAS_PDF (
-    echo Р’ РїР°РїРєРµ source РЅРµС‚ PDF-С„Р°Р№Р»РѕРІ. РџРѕР»РѕР¶РёС‚Рµ PDF Рё Р·Р°РїСѓСЃС‚РёС‚Рµ СЃРЅРѕРІР°.
+    echo В папке source нет PDF-файлов. Положите PDF и запустите снова.
     popd
     pause
     exit /b 1
 )
 
 if not exist "config.json" (
-    echo РЎРЅР°С‡Р°Р»Р° Р·Р°РїСѓСЃС‚РёС‚Рµ setup.bat вЂ” РЅСѓР¶РЅРѕ РЅР°СЃС‚СЂРѕРёС‚СЊ РїСЂРёРІСЏР·РєРё.
+    echo Сначала запустите setup.bat — нужно настроить привязки.
     popd
     pause
     exit /b 1
 )
 
 if not exist "batch_stamp.py" (
-    echo РќРµ РЅР°Р№РґРµРЅ batch_stamp.py СЂСЏРґРѕРј СЃ run.bat.
+    echo Не найден batch_stamp.py рядом с run.bat.
     popd
     pause
     exit /b 1
 )
 
-rem --- РџРѕРёСЃРє СЂР°Р±РѕС‡РµРіРѕ РёРЅС‚РµСЂРїСЂРµС‚Р°С‚РѕСЂР° Python ---
+rem --- Поиск рабочего интерпретатора Python ---
 set "PY="
 where py >nul 2>nul
 if not errorlevel 1 (
@@ -65,35 +65,35 @@ if not defined PY (
     )
 )
 if not defined PY (
-    echo Python РЅРµ РЅР°Р№РґРµРЅ РёР»Рё РЅРµ Р·Р°РїСѓСЃРєР°РµС‚СЃСЏ.
-    echo РЈСЃС‚Р°РЅРѕРІРёС‚Рµ Python СЃ https://www.python.org/downloads/ Рё РїРѕРІС‚РѕСЂРёС‚Рµ.
+    echo Python не найден или не запускается.
+    echo Установите Python с https://www.python.org/downloads/ и повторите.
     popd
     pause
     exit /b 1
 )
 
-rem --- РЈСЃС‚Р°РЅРѕРІРєР°/РѕР±РЅРѕРІР»РµРЅРёРµ pdf-sign-kit ---
+rem --- Установка/обновление pdf-sign-kit ---
 %PY% -m pip install --quiet --disable-pip-version-check --upgrade pdf-sign-kit
 if errorlevel 1 (
-    echo РќРµ СѓРґР°Р»РѕСЃСЊ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ pdf-sign-kit.
-    echo РџСЂРѕРІРµСЂСЊС‚Рµ РёРЅС‚РµСЂРЅРµС‚ Рё РїСЂР°РІР° РЅР° СѓСЃС‚Р°РЅРѕРІРєСѓ РїР°РєРµС‚РѕРІ Python.
+    echo Не удалось установить pdf-sign-kit.
+    echo Проверьте интернет и права на установку пакетов Python.
     popd
     pause
     exit /b 1
 )
 
-rem --- Р—Р°РїСѓСЃРє РѕР±СЂР°Р±РѕС‚РєРё PDF ---
+rem --- Запуск обработки PDF ---
 %PY% batch_stamp.py
 if errorlevel 1 (
     echo.
-    echo РћС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё batch_stamp.py.
+    echo Ошибка при выполнении batch_stamp.py.
     popd
     pause
     exit /b 1
 )
 
 echo.
-echo Р“РѕС‚РѕРІРѕ. Р РµР·СѓР»СЊС‚Р°С‚С‹ РІ РїР°РїРєРµ done (СЃСѓС„С„РёРєСЃ -mod).
+echo Готово. Результаты в папке done (суффикс -mod).
 popd
 pause
 exit /b 0
